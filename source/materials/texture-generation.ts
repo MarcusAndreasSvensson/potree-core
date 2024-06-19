@@ -7,7 +7,7 @@ import {
 	RGBAFormat,
 	Texture
 } from 'three';
-import {IClassification, IGradient} from '../materials/types';
+import {ClassificationEntry, IClassification, IGradient} from '../materials/types';
 
 export function generateDataTexture(width: number, height: number, color: Color): Texture 
 {
@@ -77,24 +77,26 @@ export function generateClassificationTexture(classification: IClassification): 
 		{
 			const i = x + width * y;
 
-			let color;
+			let classificationEntry: ClassificationEntry
 			if (classification[x]) 
 			{
-				color = classification[x];
+				classificationEntry = classification[x];
 			}
 			else if (classification[x % 32]) 
 			{
-				color = classification[x % 32];
+				classificationEntry = classification[x % 32];
 			}
-			else 
+			else
 			{
-				color = classification.DEFAULT;
+				classificationEntry = classification.DEFAULT
 			}
 
-			data[4 * i + 0] = 255 * color.x;
-			data[4 * i + 1] = 255 * color.y;
-			data[4 * i + 2] = 255 * color.z;
-			data[4 * i + 3] = 255 * color.w;
+			const color = classificationEntry.color;
+
+			data[4 * i + 0] = 255 * color[0];
+			data[4 * i + 1] = 255 * color[1];
+			data[4 * i + 2] = 255 * color[2];
+			data[4 * i + 3] = Number(classificationEntry.visible) * 255 * color[3];
 		}
 	}
 

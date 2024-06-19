@@ -1,10 +1,16 @@
-import {Color, IUniform as IThreeUniform, Vector4} from 'three';
+import {Color, IUniform as IThreeUniform} from 'three';
 
 export type IGradient = [number, Color][];
 
+export type ClassificationEntry = {
+  visible: boolean;
+  name: string;
+  color: [number, number, number, number];
+}
+
 export interface IClassification {
-  [value: string]: Vector4;
-  DEFAULT: Vector4;
+  [value: string]: ClassificationEntry;
+  DEFAULT: ClassificationEntry;
 }
 
 export interface IUniform<T> extends IThreeUniform {

@@ -23,11 +23,7 @@ out vec4 fragColor;
 	uniform vec4 highlightedPointColor;
 #endif
 
-#ifdef new_format
-	in vec4 vColor;
-#else
-	in vec3 vColor;
-#endif
+in vec3 vColor;
 
 #if !defined(color_type_point_index)
 	in float vOpacity;
@@ -61,13 +57,7 @@ float specularStrength = 1.0;
 
 void main() {
 
-	#ifdef new_format
-		// set actualColor vec3 from vec4 vColor
-		vec3 actualColor = vColor.xyz;
-	#else
-		// set actualColor RGB from the XYZ of vColor
-		vec3 actualColor = vColor;
-	#endif
+	vec3 actualColor = vColor;
 	
 	vec3 color = actualColor;
 	float depth = gl_FragCoord.z;

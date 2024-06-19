@@ -582,12 +582,8 @@ export class PointCloudMaterial extends RawShaderMaterial
 
   set classification(value: IClassification) 
   {
-  	const copy: IClassification = {} as any;
-  	for (const key of Object.keys(value)) 
-  	{
-  		copy[key] = value[key].clone();
-  	}
-
+		const copy = structuredClone(value);
+		
   	let isEqual = false;
   	if (this._classification === undefined) 
   	{
@@ -600,7 +596,11 @@ export class PointCloudMaterial extends RawShaderMaterial
   		for (const key of Object.keys(copy)) 
   		{
   			isEqual = isEqual && this._classification[key] !== undefined;
-  			isEqual = isEqual && copy[key].equals(this._classification[key]);
+				isEqual = isEqual && copy[key].visible === this._classification[key].visible;
+				isEqual = isEqual && copy[key].color[0] === this._classification[key].color[0];
+				isEqual = isEqual && copy[key].color[1] === this._classification[key].color[1];
+				isEqual = isEqual && copy[key].color[2] === this._classification[key].color[2];
+				isEqual = isEqual && copy[key].color[3] === this._classification[key].color[3];
   		}
   	}
 
