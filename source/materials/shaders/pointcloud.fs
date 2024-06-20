@@ -208,7 +208,7 @@ void main() {
 
 		#endif
 		
-		gl_FragColor.xyz = gl_FragColor.xyz * ( emissive + totalDiffuse + ambientLightColor * ambient ) + totalSpecular;
+		fragColor.xyz = fragColor.xyz * ( emissive + totalDiffuse + ambientLightColor * ambient ) + totalSpecular;
 
 	#endif
 	
@@ -221,8 +221,8 @@ void main() {
 		//float distance = length(2.0 * gl_PointCoord - 1.0);
 		//float w = exp( -(distance * distance) / blendHardness);
 		
-		gl_FragColor.rgb = gl_FragColor.rgb * w;
-		gl_FragColor.a = w;
+		fragColor.rgb = fragColor.rgb * w;
+		fragColor.a = w;
 	#endif
 	
 	#if defined paraboloid_point_shape
@@ -237,23 +237,23 @@ void main() {
 		gl_FragDepth = depth;
 		
 		#if defined(color_type_depth)
-			gl_FragColor.r = linearDepth;
-			gl_FragColor.g = expDepth;
+			fragColor.r = linearDepth;
+			fragColor.g = expDepth;
 		#endif
 		
 		#if defined(use_edl)
-			gl_FragColor.a = log2(linearDepth);
+			fragColor.a = log2(linearDepth);
 		#endif
 		
 	#else
 		#if defined(use_edl)
-			gl_FragColor.a = vLogDepth;
+			fragColor.a = vLogDepth;
 		#endif
 	#endif
 
 	#ifdef highlight_point
 		if (vHighlight > 0.0) {
-			gl_FragColor = highlightedPointColor;
+			fragColor = highlightedPointColor;
 		}
 	#endif
 }

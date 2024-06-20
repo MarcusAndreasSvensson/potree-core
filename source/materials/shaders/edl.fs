@@ -10,7 +10,9 @@ uniform float opacity;
 
 uniform sampler2D colorMap;
 
-varying vec2 vUv;
+in vec2 vUv;
+
+out vec4 fragColor;
 
 float response(float depth){
 	vec2 uvRadius = radius / vec2(screenWidth, screenHeight);
@@ -41,10 +43,9 @@ void main(){
 	float res = response(depth);
 	float shade = exp(-res * 300.0 * edlStrength);
 	
-	if(color.a == 0.0 && res == 0.0){
+	if ( color.a == 0.0 && res == 0.0 ){
 		discard;
-	}else{
-		gl_FragColor = vec4(color.rgb * shade, opacity);
+	} else {
+		fragColor = vec4(color.rgb * shade, opacity);
 	}
-	
 }
