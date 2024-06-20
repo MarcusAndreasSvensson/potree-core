@@ -73,7 +73,7 @@ uniform sampler2D depthMap;
 
 #ifdef new_format
 	in vec4 rgba;
-	out vec3 color;
+	vec3 color;
 	out vec3 vColor;
 #else
 	in vec3 color;
